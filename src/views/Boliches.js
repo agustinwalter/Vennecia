@@ -9,7 +9,7 @@ import { Element, scroller } from 'react-scroll';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
-import Header from './Header'
+import Header from '../components/Header'
 // Icons
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';

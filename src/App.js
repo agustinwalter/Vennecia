@@ -1,9 +1,9 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-import Home from './components/Home'
-import Boliches from './components/Boliches'
-import AvailableBoliches from './components/AvailableBoliches'
-import NotFound from './components/NotFound'
+import Home from './views/Home'
+import Boliches from './views/Boliches'
+import AvailableBoliches from './views/AvailableBoliches'
+import NotFound from './views/NotFound'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { connect } from 'react-redux'
 import { getUserData } from './store/actions/authActions'

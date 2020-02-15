@@ -1,7 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import '../index.scss'
-import Header from './Header'
+import Header from '../components/Header'
 
 const UserNotLogged = () => {
   return <h2>UserNotLogged</h2>
