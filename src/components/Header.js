@@ -84,12 +84,6 @@ const Header = (props) => {
                 <Avatar alt='Foto de perfil' src={photoURL} />
                 <h4 className="user-name">{great}</h4>
               </div>
-              <Link to="/" className="menu-link">
-                <MenuItem onClick={handleStartClose}>Mi cuenta</MenuItem>
-              </Link>
-              <Link to="/" className="menu-link">
-                <MenuItem onClick={handleStartClose}>Editar perfil</MenuItem>
-              </Link>
               <Link to="/" className="menu-link red">
                 <MenuItem onClick={handleClickOpen}>Cerrar sesión</MenuItem>
               </Link>
@@ -101,7 +95,6 @@ const Header = (props) => {
                 <h4 className="user-name">{great}</h4>
               </div>
               <Link to="/" className="menu-link">
-                {/* <MenuItem onClick={props.signIn}> */}
                 <MenuItem onClick={handleSignIn}>
                   <img src={google_color} className="g-logo" alt="Icono de Google"></img>
                   Ingresá con Google
@@ -155,7 +148,10 @@ const Header = (props) => {
           <Link to="/" className="menu-link">
             <MenuItem onClick={handleEndClose}>Página principal</MenuItem>
           </Link>
-          <Link to="/boliches" className="menu-link">
+          <Link to="/boliches-disponibles" className="menu-link">
+            <MenuItem onClick={handleEndClose}>Boliches disponibles</MenuItem>
+          </Link>
+          <Link to="/para-boliches" className="menu-link">
             <MenuItem onClick={handleEndClose}>¿Tenés un boliche?</MenuItem>
           </Link>
         </Menu>

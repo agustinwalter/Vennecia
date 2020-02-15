@@ -1,13 +1,12 @@
 import React, { useState } from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
-// import Header from './components/Header'
 import Home from './components/Home'
 import Boliches from './components/Boliches'
+import AvailableBoliches from './components/AvailableBoliches'
 import NotFound from './components/NotFound'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { connect } from 'react-redux'
 import { getUserData } from './store/actions/authActions'
-import UploadImageFromCamera from './components/UploadImageFromCamera'
 
 const styles = {
   loader: {
@@ -51,8 +50,8 @@ const App = ({ auth, getUserData, userDataLoaded, gettingData }) => {
 
       <Switch>
         <Route exact path="/" component={Home} />
-        <Route path="/boliches" component={Boliches} />
-        <Route path="/subir-foto" component={UploadImageFromCamera} />
+        <Route path="/boliches-disponibles" component={AvailableBoliches} />
+        <Route path="/para-boliches" component={Boliches} />
         <Route component={NotFound} />
       </Switch>
 

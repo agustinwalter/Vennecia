@@ -9,6 +9,7 @@ import { Element, scroller } from 'react-scroll';
 import { createMuiTheme } from '@material-ui/core/styles';
 import { makeStyles } from '@material-ui/core/styles';
 import { ThemeProvider } from '@material-ui/styles';
+import Header from './Header'
 // Icons
 import ExpandMoreIcon from '@material-ui/icons/ExpandMore';
 import ExpandMoreOutlinedIcon from '@material-ui/icons/ExpandMoreOutlined';
@@ -52,6 +53,7 @@ const Boliches = () => {
   goToSection('section-one')
   return(
     <React.Fragment>
+      <Header />
       <Element name="section-one">
         <div className="section-one">
           <div className="div-background"></div>

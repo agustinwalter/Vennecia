@@ -1,11 +1,14 @@
 import React from 'react'
 import { connect } from 'react-redux'
-import './styles/home.scss'
-import UserNotValidated from './UserNotValidated'
+import '../index.scss'
 import Header from './Header'
 
 const UserNotLogged = () => {
   return <h2>UserNotLogged</h2>
+}
+
+const UserNotValidated = () => {
+  return <h2>UserNotValidated</h2>
 }
 
 const UserValidated = () => {

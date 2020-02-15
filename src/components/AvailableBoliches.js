@@ -7,7 +7,7 @@ export default () => {
     <React.Fragment>
       <Header />
       <div className="pd-top">
-        <h2>404 Page Not Found</h2>
+        <h2>AVAILABLE_BOLICHES</h2>
       </div>
     </React.Fragment>
   )
