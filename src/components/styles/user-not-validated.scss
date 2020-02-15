@@ -1,0 +1,30 @@
+.background{
+  width: 100vw;
+  height: calc(100vh - 64px);
+  background: linear-gradient(180deg, rgba(0,25,50,1) 0%, rgba(0,50,100,1) 100%);
+  position: absolute;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: flex-start;
+}
+.pd-top-2{
+  padding-top: 2px;
+}
+.center-button{
+  width: 100vw;
+  height: 100%;
+  padding-bottom: 48px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+.step-message{
+  color: white;
+  padding: 0 20px;
+}
+.step-image{
+  height: 90px;
+  width: auto;
+  padding: 30px 0 20px 0;
+}

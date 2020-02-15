@@ -1,0 +1,43 @@
+@import './variables';
+
+.appbar{
+  background-color: $dark-blue;
+}
+.logo{
+  line-height: 0;
+  font-size: larger;
+  flex: 1;
+  text-align: center;
+}
+.logo-link{
+  color: white;
+  text-decoration: none;
+}
+.hide{
+  opacity: 0;
+}
+.menu-link{
+  color: $dark-blue;
+  text-decoration: none;
+}
+.red{
+  color: red;
+}
+.user-info{
+  display: flex;
+  border-bottom: 1px solid grey;
+  padding: 0 10px;
+  flex-direction: column;
+  justify-content: center;
+  text-align: center;
+  div{
+    margin: auto;
+  }
+  h4{
+    margin: 13px;
+  }
+}
+.g-logo{
+  height: 25px;
+  margin-right: 10px;
+}

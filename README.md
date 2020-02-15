@@ -1,0 +1,1 @@
+Vennecia es un sistema de reconocimiento facial que escanea tu rostro en la entrada del boliche para que puedas ingresar sin tener que mostrarle tu DNI al seguridad.
