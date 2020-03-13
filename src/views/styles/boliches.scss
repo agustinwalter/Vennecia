@@ -1,0 +1,155 @@
+@import '../../variables.scss';
+
+.party-image{
+  background-image: url('../../img/party-background.jpg');
+  height: 100vh;
+  width: 100vw;
+  background-position: center;
+  background-size: cover;
+  overflow: hidden;
+  position: fixed;
+  z-index: 0;
+}
+.content{
+  width: 100vw;
+  background: $background-default;
+  position: relative;
+  z-index: 1;
+  top: 100vh;
+  padding: 20px;
+  overflow: hidden;
+  box-sizing: border-box;
+}
+.first-text{
+  display: flex;
+  justify-content: center;
+  height: 100vh;
+  flex-direction: column;
+  padding: 20px;
+  box-sizing: border-box;
+  h2{
+    margin: 0;
+    font-size: 28px;
+  }
+}
+.first-button{
+  width: 100vw;
+  position: absolute;
+  bottom: 10vh;
+  text-align: center;
+}
+.text{
+  color: #fff
+}
+.ul{
+  list-style: none;
+  padding: 0px;
+  li{
+    display: flex;
+    align-items: flex-start;
+    margin-bottom: 20px;
+    margin-left: 100vw;
+    transition: .3s;
+    width: calc(100vw - 40px);
+    svg{
+      color: #90caf9;
+      font-size: 42px;
+      margin-right: 10px;
+    }
+    p{
+      margin: 0;
+      width: fit-content;
+      a{
+        margin-left: 10px;
+        color: #90caf9;
+      }
+    }
+  }
+  .li-num{
+    color: #90caf9;
+    width: 42px;
+    font-size: 42px;
+    margin-right: 10px;
+    text-align: right;
+    font-weight: bold;
+  }
+}
+.img-fac-rec{
+  background-image: url('../../img/facial.jpg');
+  height: 200px;
+  width: 100vw;
+  background-position-x: center;
+  background-position-y: center;
+  background-size: cover;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 22px;
+  box-sizing: border-box;
+  color: #303030;
+  margin: 37px 0;
+  margin-left: -20px;
+  flex-direction: column;
+  position: relative;
+  .shadow{
+    height: 7px;
+    width: 100%;
+    background: rgb(48,48,48);
+    background: linear-gradient(0deg, rgba(48,48,48,0) 0%, rgba(48,48,48,1) 100%);
+    position: absolute;
+    top: 0;
+  }
+  .sh-bot{
+    background: linear-gradient(0deg, rgba(48,48,48,1) 0%, rgba(48,48,48,0) 100%);
+    top: auto;
+    bottom: 0;
+  }
+  h3{
+    font-weight: bold;
+    color: white;
+    text-shadow: 1px 1px 2px #303030, 0 0 1em #303030, 0 0 0.2em #303030;
+    font-size: 34px;
+  }
+}
+#for-disco{
+  background-image: url('../../img/disco.jpg');
+  h3{
+    font-size: 25px;
+  }
+}
+#virtual-bar{
+  background-image: url('../../img/drinks.jpg');
+}
+#smart-album{
+  background-image: url('../../img/album.jpg');
+}
+#pricing{
+  background-image: url('../../img/money.jpg');
+}
+.div-price{
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  font-size: 20px;
+  margin-bottom: 37px;
+  color: white;
+  .five-percent{
+    font-size: 60px;
+    color: #90caf9;
+  }
+}
+.last-button{
+  text-align: center;
+  margin-bottom: 20px;
+}
+.ul-dialog{
+  padding-left: 20px;
+  margin: 0;
+  li{
+    margin-bottom: 10px;
+  }
+  li:last-child{
+    margin-bottom: 0;
+  }
+}
