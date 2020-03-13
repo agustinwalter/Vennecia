@@ -13,7 +13,7 @@ const styles = {
   loader: {
     width: '100vw',
     height: '100vh',
-    background: 'linear-gradient(180deg, rgba(0,25,50,1) 0%, rgba(0,50,100,1) 100%)',
+    background: '#303030',
     position: 'absolute',
     zIndex: '10000',
     display: 'flex',
@@ -30,7 +30,7 @@ const styles = {
 
 const theme = createMuiTheme({
   palette: {
-    // type: 'dark',
+    type: 'dark',
     primary: {
       main: '#90caf9'
     },
