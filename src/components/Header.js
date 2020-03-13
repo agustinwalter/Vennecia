@@ -100,9 +100,9 @@ const Header = (props) => {
                   Ingresá con Google
                 </MenuItem>
               </Link>
-              <Link to="/" className="menu-link">
+              {/* <Link to="/" className="menu-link">
                 <MenuItem onClick={handleStartClose}>¿No tenés cuenta de Google?</MenuItem>
-              </Link>
+              </Link> */}
             </div>
           )}          
         </Menu>
@@ -135,7 +135,7 @@ const Header = (props) => {
           <Link to="/" className="logo-link">Vennecia</Link>
         </h1>
 
-        <IconButton edge="end" color="inherit" aria-label="end-menu" onClick={handleEndClick}>
+        <IconButton edge="end" aria-label="end-menu" onClick={handleEndClick}>
           <MenuIcon />
         </IconButton>
         <Menu
@@ -148,10 +148,10 @@ const Header = (props) => {
           <Link to="/" className="menu-link">
             <MenuItem onClick={handleEndClose}>Página principal</MenuItem>
           </Link>
-          <Link to="/boliches-disponibles" className="menu-link">
+          {/* <Link to="/boliches-disponibles" className="menu-link">
             <MenuItem onClick={handleEndClose}>Boliches disponibles</MenuItem>
-          </Link>
-          <Link to="/para-boliches" className="menu-link">
+          </Link> */}
+          <Link to="/boliches" className="menu-link">
             <MenuItem onClick={handleEndClose}>¿Tenés un boliche?</MenuItem>
           </Link>
         </Menu>

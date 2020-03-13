@@ -1,7 +1,7 @@
 @import '../../variables';
 
 .appbar{
-  background-color: $dark-blue;
+  background-color: #303030;
 }
 .logo{
   line-height: 0;
@@ -12,16 +12,17 @@
 .logo-link{
   color: white;
   text-decoration: none;
+  font-weight: 100;
 }
 .hide{
   opacity: 0;
 }
 .menu-link{
-  color: $dark-blue;
+  color: white;
   text-decoration: none;
 }
 .red{
-  color: red;
+  color: #f48fb1;
 }
 .user-info{
   display: flex;
