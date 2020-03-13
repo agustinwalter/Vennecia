@@ -7,12 +7,13 @@ import NotFound from './views/NotFound'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { connect } from 'react-redux'
 import { getUserData } from './store/actions/authActions'
+import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const styles = {
   loader: {
     width: '100vw',
     height: '100vh',
-    background: 'linear-gradient(180deg, rgba(0,25,50,1) 0%, rgba(0,50,100,1) 100%)',
+    background: '#303030',
     position: 'absolute',
     zIndex: '10000',
     display: 'flex',
@@ -26,6 +27,18 @@ const styles = {
     fontWeight: 'lighter',
   },
 }
+
+const theme = createMuiTheme({
+  palette: {
+    type: 'dark',
+    primary: {
+      main: '#90caf9'
+    },
+    secondary: {
+      main: '#f48fb1'
+    }
+  },
+});
 
 const Loader = () => {
   return(
@@ -44,18 +57,20 @@ const App = ({ auth, getUserData, userDataLoaded, gettingData }) => {
   if(gettingData && !loading) setLoading(true)
 
   return (
-    <Router>
+    <ThemeProvider theme={theme}>
+      <Router>
 
-      { loading && <Loader /> }
+        { loading && <Loader /> }
 
-      <Switch>
-        <Route exact path="/" component={Home} />
-        <Route path="/boliches-disponibles" component={AvailableBoliches} />
-        <Route path="/para-boliches" component={Boliches} />
-        <Route component={NotFound} />
-      </Switch>
+        <Switch>
+          <Route exact path="/" component={Home} />
+          <Route path="/boliches-disponibles" component={AvailableBoliches} />
+          <Route path="/boliches" component={Boliches} />
+          <Route component={NotFound} />
+        </Switch>
 
-    </Router>
+      </Router>
+    </ThemeProvider>
   );
 }
 
