@@ -84,7 +84,7 @@ const Header = (props) => {
                 <Avatar alt='Foto de perfil' src={photoURL} />
                 <h4 className="user-name">{great}</h4>
               </div>
-              <Link to="/" className="menu-link red">
+              <Link to="#" className="menu-link red">
                 <MenuItem onClick={handleClickOpen}>Cerrar sesión</MenuItem>
               </Link>
             </div>
