@@ -1,5 +1,6 @@
 import React, { useRef, useEffect, useState } from 'react'
-import { scroller, Element } from 'react-scroll';
+import Header from '../components/Header'
+import { scroller, Element, animateScroll as scroll } from 'react-scroll';
 import './styles/boliches.scss'
 import Button from '@material-ui/core/Button';
 import PersonRoundedIcon from '@material-ui/icons/PersonRounded';
@@ -12,7 +13,6 @@ import FormatListBulletedRoundedIcon from '@material-ui/icons/FormatListBulleted
 import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
 import virtualBarImage from '../img/virtual-bar.png';
 import smartAlbumImage from '../img/smart-album.png';
-
 import { withStyles } from '@material-ui/core/styles';
 import Dialog from '@material-ui/core/Dialog';
 import MuiDialogTitle from '@material-ui/core/DialogTitle';
@@ -82,7 +82,6 @@ const Boliches = () => {
   const ref11 = useRef(null);
   const ref12 = useRef(null);
   const percentageRef = useRef(null);
-
   const [howWorkPosition, setHowWorkPosition] = useState('0%')
   const [forDiscoPosition, setForDiscoPosition] = useState('0%')
   const [virtualBarPosition, setVirtualBarPosition] = useState('0%')
@@ -103,13 +102,18 @@ const Boliches = () => {
   const [percentage, setPercentage] = useState('100')
   const [percVisib, setPercVisib] = useState(false)
   const [showDialogValidation, setShowDialogValidation] = useState(false)
-
   const scH = window.innerHeight
 
   useEffect(() => {
-    window.addEventListener('scroll', ()=>{
+    scroll.scrollToTop({
+      duration: 0
+    });
+  }, []);
+
+  useEffect(() => {
+    function handleScroll(){
       const a = scH - window.scrollY
-  
+
       let s = howWork.current.offsetTop + a
       if(s < scH && s >= -200) setHowWorkPosition(`${(100 * (scH - s)) / (scH + 200)}%`)
       s = forDisco.current.offsetTop + a
@@ -134,7 +138,11 @@ const Boliches = () => {
       s = ref11.current.offsetTop + a; if(s < scH) setMl11(0) 
       s = ref12.current.offsetTop + a; if(s < scH) setMl12(0) 
       s = percentageRef.current.offsetTop + a; if(s < scH) setPercVisib(true) 
-    });
+    }
+    window.addEventListener('scroll', handleScroll);
+    return function cleanup() {
+      window.removeEventListener('scroll', handleScroll);
+    };
   }, [scH]);
 
   useEffect(() => {
@@ -147,6 +155,8 @@ const Boliches = () => {
   
   return(
     <React.Fragment>
+      <Header />
+
       <div className='party-image'>
         <div className="first-text">
           <h2 className="text">¿Tenés un boliche?</h2>
@@ -158,14 +168,14 @@ const Boliches = () => {
               duration: 1000,
               delay: 0,
               smooth: true,
-              offset: -36,
+              offset: -100,
             });
           }}>
             Conocé más
           </Button>
         </div>
       </div>
-      
+
       <div className="content">
         <Element name="how-work">
           <p className="text">
@@ -196,7 +206,7 @@ const Boliches = () => {
                   duration: 1000,
                   delay: 0,
                   smooth: true,
-                  offset: 0,
+                  offset: -64,
                 });
               }}><b>Conocé más</b></a>
             </p>
@@ -211,7 +221,7 @@ const Boliches = () => {
                   duration: 1000,
                   delay: 0,
                   smooth: true,
-                  offset: 0,
+                  offset: -64,
                 });
               }}><b>Conocé más</b></a>
             </p>
@@ -377,12 +387,12 @@ const Boliches = () => {
           <br/>
         </p>
         <p className="text">
-          Luego combramos una pequeña comisión del 5% por cada entrada o bebida vendida desde nuestro sistema. Así de simple.
+          Luego cobramos una pequeña comisión del 5% por cada entrada o bebida vendida desde nuestro sistema. Así de simple.
           <br/>
           <br/>
         </p>
         <p className="text">
-          <b>El futuro llegó, contáctanos para integrar Vennecia en tu boliche.</b>
+          <b>El futuro está llegando, contactanos para integrar a Vennecia en tu boliche.</b>
           <br/>
           <br/>
         </p>

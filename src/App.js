@@ -14,7 +14,7 @@ const styles = {
     width: '100vw',
     height: '100vh',
     background: '#303030',
-    position: 'absolute',
+    position: 'fixed',
     zIndex: '10000',
     display: 'flex',
     flexDirection: 'column',
