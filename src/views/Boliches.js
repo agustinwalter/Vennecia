@@ -387,12 +387,12 @@ const Boliches = () => {
           <br/>
         </p>
         <p className="text">
-          Luego combramos una pequeña comisión del 5% por cada entrada o bebida vendida desde nuestro sistema. Así de simple.
+          Luego cobramos una pequeña comisión del 5% por cada entrada o bebida vendida desde nuestro sistema. Así de simple.
           <br/>
           <br/>
         </p>
         <p className="text">
-          <b>El futuro llegó, contáctanos para integrar Vennecia en tu boliche.</b>
+          <b>El futuro está llegando, contactanos para integrar a Vennecia en tu boliche.</b>
           <br/>
           <br/>
         </p>

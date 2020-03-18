@@ -72,7 +72,7 @@ const LandingPage = () => {
     <React.Fragment>
       <div className='party-image'>
         <div className="first-text">
-          <h2 className="text">¿Salis a bailar?</h2>
+          <h2 className="text">¿Salís a bailar?</h2>
           <p className="text">Ingresá con <b>Face ID</b> y olvidate de hacer fila.</p>
         </div>
         <div className="first-button">
@@ -92,7 +92,7 @@ const LandingPage = () => {
       <div className="content">
         <Element name="how-work">
           <p className="text">
-            <b>Vennecia</b> es un sistema de reconocimiento facial para que ingreses al boliche simplemente con tu cara:
+            <b>Vennecia</b> es un sistema de reconocimiento facial para que ingreses al boliche simplemente con tu cara.
           </p>
         </Element>
 
@@ -180,7 +180,7 @@ const LandingPage = () => {
         </Element>
 
         <p className="text">
-          Olvidate de hacer fila para comprar un trago. Con <b>Virtual Bar</b> vas a poder comprar las bebidas desde le app y pasar a buscarlas por la barra, mostrando un código QR.
+          Olvidate de hacer fila para comprar un trago. Con <b>Virtual Bar</b> vas a poder comprar las bebidas desde la app y pasar a buscarlas por la barra, mostrando un código QR.
         </p>
         <br/>
 
