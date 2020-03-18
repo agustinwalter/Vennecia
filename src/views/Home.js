@@ -2,6 +2,7 @@ import React from 'react'
 import { connect } from 'react-redux'
 import '../index.scss'
 import Header from '../components/Header'
+import LandingPage from '../views/LandingPage'
 
 // const UserNotLogged = () => {
 //   return <h2>UserNotLogged</h2>
@@ -19,16 +20,9 @@ const Home = ({status}) => {
   return(
     <React.Fragment>
       <Header />
-      <div className="pd-top" style={{
-        background: '#303030',
-        width: '100vw',
-        height: '100vh',
-        display: 'flex',
-        justifyContent: 'center',
-        alignItems: 'center',
-        color: 'white',
-        boxSizing: 'border-box'
-      }}>Sitio en desarrollo :)</div>
+
+      <LandingPage />
+
       {/* <div className="pd-top">
         {(() => {
           switch (status) {
