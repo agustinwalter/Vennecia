@@ -18,7 +18,7 @@ const Home = ({status}) => {
         switch (status) {
           case 'USER_NOT_LOGGED':
             return(<LandingPage />)
-          case 'VALIDATION_STEP_ONE':
+          case 'USER_NOT_VALIDATED':
             return(<ValidationProcess/>)
           case 'USER_VALIDATED':
             return(<UserValidated/>)
