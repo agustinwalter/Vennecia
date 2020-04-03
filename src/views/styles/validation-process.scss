@@ -1,0 +1,69 @@
+.container{
+  padding-top: 64px;
+  position: relative;
+  overflow: hidden;
+  color: white;
+  box-sizing: border-box;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  height: 100vh;
+  h2{
+    margin: 15px 20px;
+    font-size: 17px;
+  }
+  p{
+    margin: 0 20px;
+    font-size: 13px;
+    line-height: 1.5;
+    padding: 0 20px;
+    width: 100%;
+    box-sizing: border-box;
+  }
+}
+.help-img{
+  width: 60vw;
+  margin-top: 20px;
+}
+.action-btn{
+  margin: auto;
+}
+.uploading{
+  margin: auto;
+  width: 100%;
+  box-sizing: border-box;
+  padding: 20px;
+  p{
+    margin: 0;
+    padding: 0;
+    margin-top: 7px;
+    text-align: center;
+  }
+}
+.prev-img{
+  height: 22vh;
+  width: 100%;
+  margin-bottom: 20px;
+  background-position: center;
+  background-repeat: no-repeat;
+  background-size: contain;
+}
+.progress{
+  margin: auto;
+  width: 50vw;
+}
+.uploaded{
+  text-align: center;
+  padding: 20px 0;
+  box-sizing: border-box;
+  margin: auto;
+  .done{
+    color: #4caf50;
+    font-size: 60px;
+  }
+  p{
+    padding: 0;
+    margin: 10px 0px 20px;
+    max-width: calc(100vw - 40px);
+  }
+}

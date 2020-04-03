@@ -1,4 +1,5 @@
 import React, { useRef, useEffect, useState } from 'react'
+import google_color from '../img/google-color.png';
 import { scroller, Element, animateScroll as scroll } from 'react-scroll';
 import './styles/boliches.scss'
 import Button from '@material-ui/core/Button';
@@ -10,8 +11,10 @@ import FormatListBulletedRoundedIcon from '@material-ui/icons/FormatListBulleted
 import DoneRoundedIcon from '@material-ui/icons/DoneRounded';
 import virtualBarImage from '../img/virtual-bar.png';
 import smartAlbumImage from '../img/smart-album.png';
+import { connect } from 'react-redux'
+import { signOut, signIn } from '../store/actions/authActions'
 
-const LandingPage = () => {
+const LandingPage = (props) => {
   const howWork = useRef(null);
   const forDisco = useRef(null);
   const virtualBar = useRef(null);
@@ -76,7 +79,17 @@ const LandingPage = () => {
           <p className="text">Ingresá con <b>Face ID</b> y olvidate de hacer fila.</p>
         </div>
         <div className="first-button">
-          <Button variant="contained" color="primary" onClick={()=>{
+          <Button 
+            variant="contained" 
+            className="login-btn" 
+            startIcon={
+              <img src={google_color} className="g-logo" alt="Icono de Google"></img>
+            }
+            onClick={()=>{props.signIn()}
+          }>
+            Iniciá sesión con Google
+          </Button>
+          <Button variant="outlined" color="primary" onClick={()=>{
             scroller.scrollTo('how-work', {
               duration: 1000,
               delay: 0,
@@ -246,4 +259,17 @@ const LandingPage = () => {
   )
 }
 
-export default LandingPage
+const mapStateToProps = state => {
+  return{
+    auth: state.firebase.auth    
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return{
+    signOut: () => dispatch(signOut()),
+    signIn: () => dispatch(signIn())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(LandingPage)
