@@ -156,3 +156,8 @@
 [0201/211453.613:ERROR:process_memory_win.cc(73)] ReadMemory at 0x7ffbfc09f978 of 48 bytes failed: Solo se completó una parte de una solicitud ReadProcessMemory o WriteProcessMemory. (0x12B)
 [0201/211453.897:ERROR:process_memory_win.cc(73)] ReadMemory at 0x7ffbfc0a53c0 of 64 bytes failed: Solo se completó una parte de una solicitud ReadProcessMemory o WriteProcessMemory. (0x12B)
 [0201/211454.683:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Se intentó obtener acceso a un proceso que está cerrándose. (0xc000010a)
+[0404/130923.746:ERROR:process_reader_win.cc(123)] NtOpenThread: {Acceso denegado} Un proceso ha solicitado acceso a un objeto, pero no se le han concedido esos derechos de acceso. (0xc0000022)
+[0404/130924.011:ERROR:exception_snapshot_win.cc(98)] thread ID 10160 not found in process
+[0404/130924.058:ERROR:process_info.cc(329)] VirtualQueryEx: Acceso denegado. (0x5)
+[0404/130924.136:ERROR:process_info.cc(556)] ReadMemoryInfo failed
+[0404/130924.136:ERROR:scoped_process_suspend.cc(40)] NtResumeProcess: Se intentó obtener acceso a un proceso que está cerrándose. (0xc000010a)

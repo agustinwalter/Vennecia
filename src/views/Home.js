@@ -4,10 +4,7 @@ import '../index.scss'
 import Header from '../components/Header'
 import LandingPage from '../views/LandingPage'
 import ValidationProcess from '../views/ValidationProcess'
-
-const UserValidated = () => {
-  return <h2>UserValidated</h2>
-}
+import BuyTickets from '../views/BuyTickets'
 
 const Home = ({status}) => {
   return(
@@ -21,7 +18,7 @@ const Home = ({status}) => {
           case 'USER_NOT_VALIDATED':
             return(<ValidationProcess/>)
           case 'USER_VALIDATED':
-            return(<UserValidated/>)
+            return(<BuyTickets/>)
           default:
             return(null)
         }
