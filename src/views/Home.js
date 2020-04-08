@@ -5,6 +5,8 @@ import Header from '../components/Header'
 import LandingPage from '../views/LandingPage'
 import ValidationProcess from '../views/ValidationProcess'
 import BuyTickets from '../views/BuyTickets'
+import HasTickets from '../views/HasTickets'
+import TicketsAssigneds from '../views/TicketsAssigneds'
 
 const Home = ({status}) => {
   return(
@@ -19,6 +21,10 @@ const Home = ({status}) => {
             return(<ValidationProcess/>)
           case 'USER_VALIDATED':
             return(<BuyTickets/>)
+          case 'HAS_TICKETS':
+            return(<HasTickets/>)
+          case 'TICKETS_ASSIGNEDS':
+            return(<TicketsAssigneds/>)
           default:
             return(null)
         }

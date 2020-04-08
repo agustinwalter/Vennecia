@@ -1,0 +1,25 @@
+.div-green{
+  height: 35vh;
+  background: #4caf50;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  svg{
+    font-size: 53px;
+  }
+  h1{
+    font-size: 18px;
+  }
+}
+.div-message{
+  height: 65vh;
+  color: white;
+  font-size: 14px;
+  box-sizing: border-box;
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+  line-height: 1.5;
+}

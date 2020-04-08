@@ -390,7 +390,8 @@ const BuyTickets = () => {
             <Button 
               classes={{ root: classes.greenBtn }} 
               variant="contained" 
-              href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=309438352-57d0ed25-2433-48f6-a4c9-b7ff3f5adf99"
+              // href="https://www.mercadopago.com.ar/checkout/v1/redirect?pref_id=309438352-57d0ed25-2433-48f6-a4c9-b7ff3f5adf99"
+              href="/compra-completada"
             >Pagar</Button>
           </div>
         </div>
