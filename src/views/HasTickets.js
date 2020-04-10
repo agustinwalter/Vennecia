@@ -22,6 +22,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import Friends from '../components/Friends'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -143,20 +144,27 @@ const HasTickets = () => {
         <img className="logo-bl" src={faxion} alt="Logo de Faxion" />
       </div>
       
-      <p className="p-first">{
-        cantTickets === 1 ? '¿Para quién es la entrada?' : '¿Para quienes son las entradas?'
-      }</p>
+      <Friends
+        cantTickets={cantTickets}
+        availableTickets={availableTickets}
+        showWarningMessage={false}
+        // updateAssignedTickets={(tickets)=>{assignedTickets = tickets}}
+      />
 
-      {availableTickets >= 1 ? 
+      {/* <p className="p-first">{
+        cantTickets === 1 ? '¿Para quién es la entrada?' : '¿Para quienes son las entradas?'
+      }</p> */}
+
+      {/* {availableTickets >= 1 ? 
         <div className="div-info info-warning">
           <InfoOutlinedIcon/>
           <p className="p-message">
             Cada entrada debe asignarse a una persona, de lo contrario no podrá ingresar al boliche. <b>Tenés {availableTickets} entrada{availableTickets > 1 ? 's' : ''} sin asignar.</b>
           </p>
         </div> : ''
-      }
+      } */}
 
-      <Card className={classes.card}>
+      {/* <Card className={classes.card}>
         <List dense>  
           {friends.map((friend, i) => {
             return (
@@ -179,7 +187,7 @@ const HasTickets = () => {
             );
           })}
         </List>
-      </Card>
+      </Card> */}
 
       <Button
         variant="outlined"
