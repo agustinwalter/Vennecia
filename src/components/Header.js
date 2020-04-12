@@ -18,12 +18,21 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import Slide from '@material-ui/core/Slide';
 import Button from '@material-ui/core/Button';
 import google_color from '../img/google-color.png';
+import { makeStyles } from '@material-ui/core/styles';
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
 });
 
+const useStyles = makeStyles((theme) => ({
+  small: {
+    width: theme.spacing(4),
+    height: theme.spacing(4),
+  }
+}));
+
 const Header = (props) => {
+  const classes = useStyles();
   const { auth } = props
 
   const [startAnchorEl, setStartAnchorEl] = React.useState(null)
@@ -67,7 +76,7 @@ const Header = (props) => {
           aria-label="start-menu"
           onClick={handleStartClick}
         >
-          <Avatar alt='Foto de perfil' src={photoURL} />
+          <Avatar alt='Foto de perfil' src={photoURL} className={classes.small}/>
         </IconButton>
 
         <Menu

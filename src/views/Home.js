@@ -1,13 +1,13 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import '../index.scss'
+import './styles/home.scss'
 import Header from '../components/Header'
 import LandingPage from '../views/LandingPage'
 import ValidationProcess from '../views/ValidationProcess'
-
-const UserValidated = () => {
-  return <h2>UserValidated</h2>
-}
+import BuyTickets from '../views/BuyTickets'
+import HasTickets from '../views/HasTickets'
+import TicketsAssigneds from '../views/TicketsAssigneds'
 
 const Home = ({status}) => {
   return(
@@ -21,7 +21,11 @@ const Home = ({status}) => {
           case 'USER_NOT_VALIDATED':
             return(<ValidationProcess/>)
           case 'USER_VALIDATED':
-            return(<UserValidated/>)
+            return(<BuyTickets/>)
+          case 'HAS_TICKETS':
+            return(<HasTickets/>)
+          case 'TICKETS_ASSIGNEDS':
+            return(<TicketsAssigneds/>)
           default:
             return(null)
         }
