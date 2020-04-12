@@ -1,3 +1,5 @@
+@import '../../variables.scss';
+
 .div-buy{
   width: 100vw;
   height: 100vh;
@@ -36,9 +38,9 @@
   display: flex;
   flex-direction: column;
   text-align: center;
-  color: white;
+  color: $text-primary;
 }
-.div-price{
+.div-price-bt{
   display: flex;
   flex-direction: column;
   margin-top: 20px;
@@ -49,40 +51,12 @@
     font-size: 31px;
   }
 }
-.p-lis{
-  margin: 0;
-  margin-bottom: 20px;
-  text-align: left;
-  font-size: 14px;
-  line-height: 1.5;
-}
 .form-pub{
   display: flex;
   flex-direction: column;
 }
 #cant-tickets{
   text-align: center;
-}
-.av-tickets{
-  margin: 3px 0;
-  font-size: 13px;
-  text-align: left;
-}
-.div-info{
-  border: 1px solid #2196f3;
-  display: flex;
-  padding: 6px 16px;
-  margin-top: 15px;
-  color: rgb(166, 213, 250);
-  border-radius: 5px;
-  svg{
-    color: #2196f3;
-    margin-right: 12px;
-  }
-  p{
-    margin: 0;
-    font-size: 12px;
-  }
 }
 .div-btn-pay{
   display: flex;

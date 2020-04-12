@@ -1,6 +1,7 @@
 import React from 'react'
 import { connect } from 'react-redux'
 import '../index.scss'
+import './styles/home.scss'
 import Header from '../components/Header'
 import LandingPage from '../views/LandingPage'
 import ValidationProcess from '../views/ValidationProcess'

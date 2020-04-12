@@ -1,0 +1,25 @@
+@import '../../variables.scss';
+
+.div-info{
+  border: 1px solid $info-main;
+  display: flex;
+  padding: 6px 16px;
+  margin-top: 15px;
+  color: $info-light;
+  border-radius: 5px;
+  svg{
+    color: $info-main;
+    margin-right: 12px;
+  }
+  p{
+    margin: 0;
+    font-size: 12px;
+  }
+}
+.p-lis{
+  margin: 0;
+  margin-bottom: 20px;
+  text-align: left;
+  font-size: 14px;
+  line-height: 1.5;
+}

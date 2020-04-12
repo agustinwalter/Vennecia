@@ -9,7 +9,8 @@ const TicketsAssigneds = () => {
       className="div-tickets" 
       style={{
         justifyContent: 'center',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: '100vh'
       }}
     >
       <div style={{textAlign: 'center'}}>

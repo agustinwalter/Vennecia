@@ -168,7 +168,7 @@ const Boliches = () => {
               duration: 1000,
               delay: 0,
               smooth: true,
-              offset: -100,
+              offset: -92,
             });
           }}>
             Conocé más

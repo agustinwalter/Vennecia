@@ -1,8 +1,10 @@
+@import '../../variables.scss';
+
 .container{
   padding-top: 64px;
   position: relative;
   overflow: hidden;
-  color: white;
+  color: $text-primary;
   box-sizing: border-box;
   display: flex;
   flex-direction: column;
@@ -58,7 +60,7 @@
   box-sizing: border-box;
   margin: auto;
   .done{
-    color: #4caf50;
+    color: $success-main;
     font-size: 60px;
   }
   p{

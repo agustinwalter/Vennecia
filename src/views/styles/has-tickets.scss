@@ -1,10 +1,11 @@
+@import '../../variables.scss';
+
 .div-tickets{
   padding: 56px 20px 20px 20px;
   width: 100vw;
-  height: 100vh;
   box-sizing: border-box;
   overflow: hidden;
-  color: white;
+  color: $text-primary;
   position: relative;
   display: flex;
   flex-direction: column;
@@ -12,23 +13,4 @@
 .logo-bl{
   height: 10vh;
   margin-top: 20px;
-}
-.p-first{
-  text-align: center;
-  margin: 10px 0;
-}
-.p-message{
-  font-size: 13px;
-  line-height: 1.5;
-  margin: 0 20px;
-}
-.info-warning{
-  margin: 10px 0 20px 0;
-  border: 1px solid #ff9800;
-  svg{
-    color: #ff9800;
-  }
-  p{
-    color: rgb(255, 213, 153);
-  }
 }

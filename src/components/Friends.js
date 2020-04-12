@@ -8,6 +8,23 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Avatar from '@material-ui/core/Avatar';
 import Card from '@material-ui/core/Card';
 import CheckCircleRoundedIcon from '@material-ui/icons/CheckCircleRounded';
+import Snackbar from '@material-ui/core/Snackbar'; 
+import IconButton from '@material-ui/core/IconButton';
+import CloseIcon from '@material-ui/icons/Close';
+import Slide from '@material-ui/core/Slide';
+import Button from '@material-ui/core/Button';
+import AddRoundedIcon from '@material-ui/icons/AddRounded';
+import Dialog from '@material-ui/core/Dialog'; 
+import DialogActions from '@material-ui/core/DialogActions';
+import DialogContent from '@material-ui/core/DialogContent';
+import DialogContentText from '@material-ui/core/DialogContentText';
+import TextField from '@material-ui/core/TextField';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import './styles/friends.scss'
+
+const Transition = React.forwardRef(function Transition(props, ref) {
+  return <Slide direction="up" ref={ref} {...props} />;
+});
 
 const useStyles = makeStyles((theme) => ({
   liSel: {
@@ -20,6 +37,9 @@ const useStyles = makeStyles((theme) => ({
   },
   card: {
     margin: 0
+  },
+  greenBtn: {
+    background: 'linear-gradient(0deg, #4caf50 0%, #4caf50 100%)',
   }
 }));
 
@@ -45,22 +65,84 @@ const AvailableTickets = ({availableTickets, showWarningMessage})=>{
   return null;
 }
 
+const AssignLater = ({cantTickets, showWarningMessage})=>{
+  if(!showWarningMessage && cantTickets !== 1){
+    return(
+      <p 
+        className="p-lis" 
+        style={{
+          margin: '15px 0 0 0', 
+          fontSize: '13px'
+        }}
+      >Podés asignar las entradas más adelante.</p>
+    )
+  }
+  return null
+}
+
+const DoneButton = ({availableTickets, showWarningMessage})=>{
+  const classes = useStyles();
+  if(showWarningMessage){
+    return(
+      <Button
+        variant="contained"
+        style={{marginTop: '20px'}}
+        className={availableTickets === 0 ? classes.greenBtn : ''}
+        disabled={availableTickets !== 0}
+        onClick={()=>{  }}
+      >¡Listo!</Button>
+    )
+  }
+  return null
+}
+
+const friendsDatabase = [
+  {
+    name: 'Sofía Walter',
+    picture:'https://material-ui.com/static/images/avatar/3.jpg'
+  },
+  {
+    name: 'Nahuel Osan',
+    picture:'https://material-ui.com/static/images/avatar/2.jpg'
+  }
+]
+
 const Friends = ({
   cantTickets,
-  availableTickets,
   showWarningMessage,
   updateAssignedTickets
 }) => {
   const classes = useStyles();
 
-  const [friends, setFriends] = useState([])
+  const [errorMessage, setErrorMessage] = useState(false);
+  const [availableTickets, setAvailableTickets] = useState(cantTickets);
+  const [dialogAddFriend, setDialogAddFriend] = useState(false);
+  const [newFriendImage, setNewFriendImage] = useState('');
+  const [newFriendName, setNewFriendName] = useState('');
+  const [friendsMatched, setFriendsMatched] = useState([])
+  const [friends, setFriends] = useState([
+    {
+      name: 'Agustín Walter',
+      picture:'https://lh3.googleusercontent.com/a-/AOh14Gjxz-9LMuqCS2R1NfOnpYuxK2Y9k8iz8zveuxr6',
+      hasTicket: true
+    },
+    {
+      name: 'Fransisco Raggiardo',
+      picture:'https://material-ui.com/static/images/avatar/2.jpg',
+      hasTicket: false
+    },
+    {
+      name: 'Fransisco Raggiardo',
+      picture:'https://material-ui.com/static/images/avatar/2.jpg',
+      hasTicket: false
+    }
+  ])
 
   const setTicketToFriend = (friend, i) => {
-    const assignedTickets = cantTickets - availableTickets
     if(friend.hasTicket !== false){
       if(cantTickets > 1){
         friends[i].hasTicket = false
-        // updateAssignedTickets(assignedTickets-1)
+        setAvailableTickets(availableTickets+1)
         setFriends([...friends])
       }
     }else{
@@ -74,32 +156,51 @@ const Friends = ({
       }else{
         if(availableTickets > 0){
           friends[i].hasTicket = true
-          // updateAssignedTickets(assignedTickets+1)
+          setAvailableTickets(availableTickets-1)
           setFriends([...friends])
-        }
-        // else setErrorMessage(true)
+        }else setErrorMessage(true)
       }
     }
   }
-  
-  useEffect(() => {
-    // Obtener lista de amigos de la base de datos
-    console.log('Obteniendo lista de amigos...')
-    setTimeout(() => {
-      setFriends([
-        {
-          name: 'Agustín Walter',
-          picture:'https://lh3.googleusercontent.com/a-/AOh14Gjxz-9LMuqCS2R1NfOnpYuxK2Y9k8iz8zveuxr6',
-          hasTicket: true
-        },
-        {
-          name: 'Fransisco Raggiardo',
-          picture:'https://material-ui.com/static/images/avatar/2.jpg',
-          hasTicket: false
+
+  const searchFriend = event => {
+    const search = event.target.value
+    setNewFriendName(search)
+    if(search.length > 2){
+      friendsDatabase.forEach(friend => {
+        if(friend.name.toLowerCase().includes(search.toLowerCase())){
+          friendsMatched.push(friend)
+          setFriendsMatched([...friendsMatched])
         }
-      ])
-    }, 1000);
-  }, []);
+      });
+    }else setFriendsMatched([])
+  }
+
+  const addNewFriend = () => {
+    if(newFriendName !== ''){
+      friends.push({
+        name: newFriendName,
+        picture: newFriendImage,
+        hasTicket: false
+      })
+      setFriends([...friends])
+    }
+    setDialogAddFriend(false)
+  }
+
+  function selectFriend(friend){
+    setNewFriendImage(friend.picture)
+    setNewFriendName(friend.name)
+    setFriendsMatched([])
+  }
+
+  useEffect(()=>{
+    setAvailableTickets(cantTickets - 1)
+    friends.forEach((f, i) => { friends[i].hasTicket = false });
+    friends[0].hasTicket = true
+  // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [cantTickets])
+
 
   return(
     <React.Fragment>
@@ -146,6 +247,107 @@ const Friends = ({
           })}
         </List>
       </Card>
+
+      {/* Botón agregar amig@ */}
+      <Button
+        variant="outlined"
+        color="primary"
+        startIcon={<AddRoundedIcon />}
+        style={{marginTop: '20px'}}
+        onClick={()=>{ setDialogAddFriend(true) }}
+      >Agregar amig@</Button>
+
+      {/* Mensaje de asignar entradas más adelante */}
+      <AssignLater
+        cantTickets={cantTickets}
+        showWarningMessage={showWarningMessage}
+      />
+
+      {/* Botón de listo */}
+      <DoneButton
+        availableTickets={availableTickets}
+        showWarningMessage={showWarningMessage}
+      />
+      
+      {/* Mesnaje de no te quedan entradas */}
+      <Snackbar 
+        open={errorMessage} 
+        autoHideDuration={5000} 
+        onClose={()=>{ setErrorMessage(false) }}
+        message="Ya no te quedan entradas."
+        TransitionComponent={Transition}
+        action={
+          <IconButton size="small" aria-label="close" color="inherit" onClick={()=>{ setErrorMessage(false) }}>
+            <CloseIcon fontSize="small" />
+          </IconButton>
+        }
+      ></Snackbar>
+
+      {/* Dialogo para agregar amig@ */}
+      <Dialog 
+        open={dialogAddFriend} 
+        onClose={()=>{setDialogAddFriend(false)}} 
+        aria-labelledby="form-dialog-title"
+        TransitionComponent={Transition}
+      >
+        <DialogContent>
+          <DialogContentText>Escribí el nombre de tu amig@</DialogContentText>
+          <TextField
+            autoFocus
+            margin="dense"
+            id="add-friend"
+            fullWidth
+            variant="outlined"
+            style={{margin: 0}}
+            value={newFriendName}
+            InputProps={{
+              startAdornment: (
+                <InputAdornment position="start">
+                  <Avatar
+                    className={classes.small}
+                    alt={`Foto de perfil`}
+                    src={newFriendImage}
+                  />
+                </InputAdornment>
+              )
+            }}
+            onChange={searchFriend}
+          />
+          <List dense style={{
+            padding: 0,
+            border: '1px solid rgba(255, 255, 255, 0.23)'
+          }}>
+            {friendsMatched.map((friend, i) => {
+              return (
+                <ListItem 
+                  key={`friend-matched-${i}`} 
+                  button 
+                  onClick={()=>{selectFriend(friend)}}
+                >
+                  <ListItemAvatar>
+                    <Avatar
+                      className={classes.small}
+                      alt={`Foto de perfil`}
+                      src={friend.picture}
+                    />
+                  </ListItemAvatar>
+                  <ListItemText primary={friend.name}/>
+                </ListItem>
+              );
+            })}
+          </List>
+        </DialogContent>
+        <DialogActions>
+          <Button onClick={()=>{
+            setDialogAddFriend(false)
+          }} color="secondary">
+            Cancelar
+          </Button>
+          <Button onClick={addNewFriend} color="primary">
+            Aceptar
+          </Button>
+        </DialogActions>
+      </Dialog>
 
     </React.Fragment>
   )
