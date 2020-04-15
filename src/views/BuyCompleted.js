@@ -3,7 +3,7 @@ import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutline
 import Button from '@material-ui/core/Button';
 import './styles/buy-complete.scss'
 
-const BuyCompleted = ({status}) => {
+const BuyCompleted = () => {
   return(
     <React.Fragment>
       <div className="div-green">

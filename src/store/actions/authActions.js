@@ -107,6 +107,18 @@ export const uploadImageToFirebase = (image) => {
           subStatus,
           status
         }).then(result => {
+          if(subStatus === 'VALIDATION_STEP_TWO'){
+            const url = `https://us-central1-vennecia-3414c.cloudfunctions.net/sendNotificationEmail?userId=${state.auth.docId}`           
+            const http = new XMLHttpRequest()
+            http.open("GET", url)
+            http.addEventListener("readystatechange", function() {
+              if(this.readyState === 4) {
+                console.log(this.responseText);
+              }
+            });
+            http.send()
+          }
+
           if(subStatus === 'PENDING_VALIDATION'){
             // Me envío un email con la info
             const url = `https://us-central1-vennecia-3414c.cloudfunctions.net/sendNotificationEmail?userId=${state.auth.docId}`           

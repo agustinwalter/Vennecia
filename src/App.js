@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import Home from './views/Home'
 import Boliches from './views/Boliches'
 import BuyCompleted from './views/BuyCompleted'
+import Admin from './views/Admin'
 import AvailableBoliches from './views/AvailableBoliches'
 import NotFound from './views/NotFound'
 import CircularProgress from '@material-ui/core/CircularProgress'
@@ -68,6 +69,9 @@ const App = ({ auth, getUserData, userDataLoaded, gettingData }) => {
           <Route path="/boliches-disponibles" component={AvailableBoliches} />
           <Route path="/boliches" component={Boliches} />
           <Route path="/compra-completada" component={BuyCompleted} />
+          <Route path="/admin" >
+            <Admin stillLoading={loading} />
+          </Route>
           <Route component={NotFound} />
         </Switch>
 
