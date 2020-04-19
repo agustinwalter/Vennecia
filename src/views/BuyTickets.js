@@ -1,4 +1,6 @@
-import React, { useState } from 'react'
+import React, { useState, useEffect } from 'react'
+import { getBolicheData } from '../store/actions/ticketsActions'
+import { connect } from 'react-redux'
 import faxion from '../img/faxion.png';
 import './styles/buy-tickets.scss'
 import Button from '@material-ui/core/Button';
@@ -51,7 +53,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const BuyTickets = () => {
+const BuyTickets = ({ticketsState, getBolicheData}) => {  
   const classes = useStyles();
 
   const [stepNum, setStepNum] = useState('0%')
@@ -62,7 +64,7 @@ const BuyTickets = () => {
   const [newPublicName, setNewPublicName] = useState('');
   const [publicsMatched, setPublicsMatched] = useState([])
 
-  const ticketAmount = 300
+  const ticketAmount = ticketsState.baseAmountTicket || 0
   const publicsDatabase = [
     {
       name: 'Camila García',
@@ -106,6 +108,8 @@ const BuyTickets = () => {
     setNewPublicName(publicR.name)
     setPublicsMatched([])
   }
+
+  useEffect(() => { getBolicheData() }, [getBolicheData])
 
   return(
     <div className="div-buy">
@@ -302,4 +306,16 @@ const BuyTickets = () => {
   )
 }
 
-export default BuyTickets
+const mapStateToProps = state => {
+  return{
+    ticketsState: state.tickets
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return{
+    getBolicheData: () => dispatch(getBolicheData())
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(BuyTickets)

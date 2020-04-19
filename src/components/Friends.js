@@ -1,4 +1,6 @@
 import React, { useState, useEffect } from 'react'
+import { addFriendToFirebase } from '../store/actions/authActions'
+import { connect } from 'react-redux'
 import InfoOutlinedIcon from '@material-ui/icons/InfoOutlined';
 import { makeStyles } from '@material-ui/core/styles';
 import List from '@material-ui/core/List';
@@ -20,6 +22,7 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
+import algoliasearch from 'algoliasearch/lite';
 import './styles/friends.scss'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
@@ -96,46 +99,33 @@ const DoneButton = ({availableTickets, showWarningMessage})=>{
   return null
 }
 
-const friendsDatabase = [
-  {
-    name: 'Sofía Walter',
-    picture:'https://material-ui.com/static/images/avatar/3.jpg'
-  },
-  {
-    name: 'Nahuel Osan',
-    picture:'https://material-ui.com/static/images/avatar/2.jpg'
-  }
-]
+const client = algoliasearch('I1V3GOAM46', '9120ad3e234608f6f66eb2bae0cd9293');
+const usersName = client.initIndex('users');
 
 const Friends = ({
   cantTickets,
   showWarningMessage,
-  updateAssignedTickets
-}) => {
+  updateAssignedTickets,
+  addFriendToFirebase,
+  state
+}) => {    
+  console.log(state)
+
   const classes = useStyles();
 
   const [errorMessage, setErrorMessage] = useState(false);
+  const [textErrorMessage, setTextErrorMessage] = useState('');
   const [availableTickets, setAvailableTickets] = useState(cantTickets);
   const [dialogAddFriend, setDialogAddFriend] = useState(false);
-  const [newFriendImage, setNewFriendImage] = useState('');
-  const [newFriendName, setNewFriendName] = useState('');
+  const [newFriend, setNewFriend] = useState({});
   const [friendsMatched, setFriendsMatched] = useState([])
   const [friends, setFriends] = useState([
     {
-      name: 'Agustín Walter',
-      picture:'https://lh3.googleusercontent.com/a-/AOh14Gjxz-9LMuqCS2R1NfOnpYuxK2Y9k8iz8zveuxr6',
+      name: state.firebase.auth.displayName,
+      image: state.firebase.auth.photoURL,
       hasTicket: true
     },
-    {
-      name: 'Fransisco Raggiardo',
-      picture:'https://material-ui.com/static/images/avatar/2.jpg',
-      hasTicket: false
-    },
-    {
-      name: 'Fransisco Raggiardo',
-      picture:'https://material-ui.com/static/images/avatar/2.jpg',
-      hasTicket: false
-    }
+    ...state.auth.friends
   ])
 
   const setTicketToFriend = (friend, i) => {
@@ -158,39 +148,49 @@ const Friends = ({
           friends[i].hasTicket = true
           setAvailableTickets(availableTickets-1)
           setFriends([...friends])
-        }else setErrorMessage(true)
+        }else{
+          setTextErrorMessage('Ya no te quedan entradas.')
+          setErrorMessage(true)
+        } 
       }
     }
   }
 
   const searchFriend = event => {
     const search = event.target.value
-    setNewFriendName(search)
     if(search.length > 2){
-      friendsDatabase.forEach(friend => {
-        if(friend.name.toLowerCase().includes(search.toLowerCase())){
-          friendsMatched.push(friend)
-          setFriendsMatched([...friendsMatched])
-        }
+      usersName.search(search).then(({ hits }) => {
+        setFriendsMatched(hits)
       });
-    }else setFriendsMatched([])
+    }else setFriendsMatched([]) 
+    setNewFriend({
+      name: search,
+      image: ''
+    })
   }
 
   const addNewFriend = () => {
-    if(newFriendName !== ''){
-      friends.push({
-        name: newFriendName,
-        picture: newFriendImage,
-        hasTicket: false
-      })
-      setFriends([...friends])
+    if(newFriend.objectID){
+      const exist = state.auth.friends.find(friend => friend.docId === newFriend.objectID)
+      if(exist !== undefined){
+        setTextErrorMessage('Esta persona ya está en tu lista de amig@s.')
+        setErrorMessage(true)
+      }else{
+        addFriendToFirebase({
+          name: newFriend.name,
+          image: newFriend.image,
+          docId: newFriend.objectID,
+          hasTicket: false
+        })
+      }
+    }else{
+      setTextErrorMessage('Seleccioná a tu amig@ de la lista.')
+      setErrorMessage(true)
     }
-    setDialogAddFriend(false)
   }
 
   function selectFriend(friend){
-    setNewFriendImage(friend.picture)
-    setNewFriendName(friend.name)
+    setNewFriend(friend)
     setFriendsMatched([])
   }
 
@@ -200,7 +200,6 @@ const Friends = ({
     friends[0].hasTicket = true
   // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [cantTickets])
-
 
   return(
     <React.Fragment>
@@ -237,7 +236,7 @@ const Friends = ({
                   <Avatar
                     className={classes.small}
                     alt={`Foto de perfil`}
-                    src={friend.picture}
+                    src={friend.image}
                   />
                 </ListItemAvatar>
                 <ListItemText primary={friend.name}/>
@@ -274,7 +273,8 @@ const Friends = ({
         open={errorMessage} 
         autoHideDuration={5000} 
         onClose={()=>{ setErrorMessage(false) }}
-        message="Ya no te quedan entradas."
+        // message="Ya no te quedan entradas."
+        message={textErrorMessage}
         TransitionComponent={Transition}
         action={
           <IconButton size="small" aria-label="close" color="inherit" onClick={()=>{ setErrorMessage(false) }}>
@@ -292,6 +292,7 @@ const Friends = ({
       >
         <DialogContent>
           <DialogContentText>Escribí el nombre de tu amig@</DialogContentText>
+        
           <TextField
             autoFocus
             margin="dense"
@@ -299,47 +300,52 @@ const Friends = ({
             fullWidth
             variant="outlined"
             style={{margin: 0}}
-            value={newFriendName}
+            value={newFriend.name || ''}
             InputProps={{
               startAdornment: (
                 <InputAdornment position="start">
                   <Avatar
                     className={classes.small}
                     alt={`Foto de perfil`}
-                    src={newFriendImage}
+                    src={newFriend.image}
                   />
                 </InputAdornment>
               )
             }}
             onChange={searchFriend}
           />
-          <List dense style={{
-            padding: 0,
-            border: '1px solid rgba(255, 255, 255, 0.23)'
-          }}>
-            {friendsMatched.map((friend, i) => {
-              return (
-                <ListItem 
-                  key={`friend-matched-${i}`} 
-                  button 
-                  onClick={()=>{selectFriend(friend)}}
-                >
-                  <ListItemAvatar>
-                    <Avatar
-                      className={classes.small}
-                      alt={`Foto de perfil`}
-                      src={friend.picture}
-                    />
-                  </ListItemAvatar>
-                  <ListItemText primary={friend.name}/>
-                </ListItem>
-              );
-            })}
-          </List>
+
+          {friendsMatched.length > 0 &&
+            <List dense style={{
+              padding: 0,
+              border: '1px solid rgba(255, 255, 255, 0.23)'
+            }}>
+              {friendsMatched.map((friend, i) => {
+                return (
+                  <ListItem 
+                    key={`friend-matched-${i}`} 
+                    button 
+                    onClick={()=>{selectFriend(friend)}}
+                  >
+                    <ListItemAvatar>
+                      <Avatar
+                        className={classes.small}
+                        alt={`Foto de perfil`}
+                        src={friend.image}
+                      />
+                    </ListItemAvatar>
+                    <ListItemText primary={friend.name}/>
+                  </ListItem>
+                );
+              })}
+            </List>
+          }
         </DialogContent>
         <DialogActions>
           <Button onClick={()=>{
             setDialogAddFriend(false)
+            setNewFriend({})
+            setFriendsMatched([])
           }} color="secondary">
             Cancelar
           </Button>
@@ -353,4 +359,16 @@ const Friends = ({
   )
 }
 
-export default Friends
+const mapStateToProps = state => {
+  return{
+    state: state
+  }
+}
+
+const mapDispatchToProps = dispatch => {
+  return{
+    addFriendToFirebase: (newFriend) => dispatch(addFriendToFirebase(newFriend)),
+  }
+}
+
+export default connect(mapStateToProps, mapDispatchToProps)(Friends)

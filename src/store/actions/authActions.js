@@ -6,7 +6,9 @@ export const getUserData = () => {
     .get().then(querySnapshot => {
       if(querySnapshot.docs.length !== 0){
         querySnapshot.forEach(function(doc) {
-          dispatch({ type: 'GET_USER_DATA_SUCCESS', userData: doc.data() })
+          let userData = doc.data()
+          userData.docId = doc.id
+          dispatch({ type: 'GET_USER_DATA_SUCCESS', userData })
         });
       }
     }).catch(err => {
@@ -64,5 +66,19 @@ export const signOut = () => {
     .then(result => {
       dispatch({ type: 'SIGNOUT_SUCCESS' })
     })
+  }
+}
+
+export const addFriendToFirebase = (newFriend) => {
+  return (dispatch, getState, { getFirebase, getFirestore }) => {
+    const state = getState()
+    const firestore = getFirestore()
+    firestore.collection("users").doc(state.auth.docId).update({
+      friends: firestore.FieldValue.arrayUnion(newFriend)
+    }).then(()=>{
+      let friendsUpdated = state.auth.friends
+      friendsUpdated.push(newFriend)
+      dispatch({ type: 'FRIEND_ADDED', friendsUpdated })
+    });
   }
 }
