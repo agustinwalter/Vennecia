@@ -8,8 +8,9 @@ import ValidationProcess from '../views/ValidationProcess'
 import BuyTickets from '../views/BuyTickets'
 import HasTickets from '../views/HasTickets'
 import TicketsAssigneds from '../views/TicketsAssigneds'
+import PendingValidation from './PendingValidation'
 
-const Home = ({status}) => {
+const Home = ({status, subStatus}) => {
   return(
     <React.Fragment>
       <Header />
@@ -21,6 +22,7 @@ const Home = ({status}) => {
           case 'USER_NOT_VALIDATED':
             return(<ValidationProcess/>)
           case 'USER_VALIDATED':
+            if(subStatus === 'PENDING_VALIDATION') return(<PendingValidation/>)
             return(<BuyTickets/>)
           case 'HAS_TICKETS':
             return(<HasTickets/>)
@@ -36,7 +38,8 @@ const Home = ({status}) => {
 
 const mapStateToProps = state => {
   return{
-    status: state.auth.status
+    status: state.auth.status,
+    subStatus: state.auth.subStatus
   }
 }
 

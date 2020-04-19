@@ -1,6 +1,7 @@
 const initState = {
   authError: null,
   status: 'USER_NOT_LOGGED',
+  subStatus: 'VALIDATION_STEP_ONE',
   userDataLoaded: false,
   gettingData: false,
   friendsList: []
@@ -34,8 +35,10 @@ const authReducer = (state = initState, action) => {
 
     case 'SIGNOUT_SUCCESS':
       return {
-        ...state,
-        status: 'USER_NOT_LOGGED'
+        authError: null,
+        status: 'USER_NOT_LOGGED',
+        userDataLoaded: false,
+        gettingData: false
       }
 
     case 'GETTING_DATA':
@@ -48,6 +51,26 @@ const authReducer = (state = initState, action) => {
       return {
         ...state,
         friends: action.friendsUpdated
+      }
+      
+    case 'VALIDATION_STEP_UPDATED':
+      return {
+        ...state,
+        subStatus: action.data.subStatus,
+        status: action.data.status,
+        uploadCompleted: true
+      }
+
+    case 'UPDATE_UPLOAD_PROGRESS':
+      return {
+        ...state,
+        uploadProgress: action.progress
+      }
+
+    case 'UPLOAD_COMPLETED_FALSE':
+      return {
+        ...state,
+        uploadCompleted: false
       }
 
     default:
