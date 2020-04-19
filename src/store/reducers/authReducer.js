@@ -2,7 +2,8 @@ const initState = {
   authError: null,
   status: 'USER_NOT_LOGGED',
   userDataLoaded: false,
-  gettingData: false
+  gettingData: false,
+  friendsList: []
 }
 
 const authReducer = (state = initState, action) => {
@@ -41,6 +42,12 @@ const authReducer = (state = initState, action) => {
       return {
         ...state,
         gettingData: action.status
+      }
+
+    case 'FRIEND_ADDED':
+      return {
+        ...state,
+        friends: action.friendsUpdated
       }
 
     default:
