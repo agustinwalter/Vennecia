@@ -2,7 +2,7 @@ import React from 'react'
 import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded';
 import './styles/buy-complete.scss'
 
-const PendingValidation = ({status}) => {
+const PendingValidation = () => {
   return(
     <React.Fragment>
       <div className="div-green" style={{

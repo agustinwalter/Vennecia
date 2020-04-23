@@ -1,13 +1,12 @@
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { connect } from 'react-redux'
-import { uploadImageToFirebase, setUploadCompletedFalse } from '../store/actions/authActions'
+import { uploadImageToFirebase } from '../store/actions/authActions'
 import './styles/validation-process.scss'
 import front from '../img/front.png';
 import back from '../img/back.png';
 import Button from '@material-ui/core/Button';
 import selfie from '../img/selfie.png';
 import LinearProgress from '@material-ui/core/LinearProgress';
-import CheckCircleOutlineRoundedIcon from '@material-ui/icons/CheckCircleOutlineRounded';
 import Dialog from '@material-ui/core/Dialog';
 import DialogActions from '@material-ui/core/DialogActions';
 import DialogContent from '@material-ui/core/DialogContent';
@@ -28,19 +27,19 @@ const useStyles = makeStyles({
 });
 
 const ValidationProcess = ({
-  state, 
   uploadImageToFirebase,
-  setUploadCompletedFalse
-}) => {    
+  validationStep,
+  validationProcess
+}) => {
   const classes = useStyles();
 
   const [showCropperImage, setShowCropperImage] = useState('100vh')
-  const [statusImage, setStatusImage] = useState('NOT_LOADED')
-  const [validationStep, setValidationStep] = useState(state.subStatus)
   const [openDialog, setOpenDialog] = useState(false)
   const [prevImage, setPrevImage] = useState('')
 
-  const uploadProgress = state.uploadProgress || 0
+  const uploadProgress = validationProcess.uploadProgress || 0
+  const statusImage = validationProcess.statusImage || 'NOT_LOADED'
+
 
   let elements = {
     image: front,
@@ -75,24 +74,12 @@ const ValidationProcess = ({
       document.getElementById(origin).value = ''
     }
   }
-  
-  const nextStep = () => {
-    if(validationStep === 'VALIDATION_STEP_ONE') setValidationStep('VALIDATION_STEP_TWO')
-    else if(validationStep === 'VALIDATION_STEP_TWO') setValidationStep('VALIDATION_STEP_THREE')
-    setUploadCompletedFalse()
-    setStatusImage('NOT_LOADED')    
-  }
 
   async function uploadImage(){
-    setStatusImage('UPLOADING')
     const blobImage = await fetch(prevImage).then(r => r.blob());
     uploadImageToFirebase(blobImage)
     setShowCropperImage('100vh')
   }
-
-  useEffect(() => {
-    if(state.uploadCompleted) setStatusImage('UPLOADED')
-  }, [state.uploadCompleted])
 
   return(
     <div className="container">
@@ -132,14 +119,6 @@ const ValidationProcess = ({
             <div className="prev-img" style={{backgroundImage: `url('${prevImage}')`}}></div>
             <LinearProgress variant="determinate" value={uploadProgress} className="progress" />
             <p>Subiendo foto</p>
-          </div>,
-        'UPLOADED': 
-          <div className="uploaded">
-            <CheckCircleOutlineRoundedIcon className="done"/>
-            <p>¡Listo! Podés continuar con el siguiente paso.</p>
-            <Button variant="contained" color="primary" onClick={nextStep}>
-              Siguiente paso
-            </Button>
           </div>
       }[statusImage]}
     
@@ -190,20 +169,21 @@ const ValidationProcess = ({
           </label>
         </DialogActions>
       </Dialog>
+      
     </div>
   )
 }
 
 const mapStateToProps = state => {
   return{
-    state: state.auth
+    validationProcess: state.vennecia.validationProcess,
+    validationStep: state.vennecia.user.subStatus
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return{
     uploadImageToFirebase: (image) => dispatch(uploadImageToFirebase(image)),
-    setUploadCompletedFalse: () => dispatch(setUploadCompletedFalse())
   }
 }
 

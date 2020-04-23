@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useState, useEffect } from 'react'
 import Menu from '@material-ui/core/Menu';
 import AppBar from '@material-ui/core/AppBar';
 import MenuIcon from '@material-ui/icons/Menu';
@@ -31,96 +31,127 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const Header = (props) => {
+const Header = ({ firebaseAuth, signOut, signIn }) => {
   const classes = useStyles();
-  const { auth } = props
 
-  const [startAnchorEl, setStartAnchorEl] = React.useState(null)
-  const handleStartClick = event => { setStartAnchorEl(event.currentTarget) }
-  const handleStartClose = () => { setStartAnchorEl(null) }
-  
-  const [endAnchorEl, setEndAnchorEl] = React.useState(null)
-  const handleEndClick = event => { setEndAnchorEl(event.currentTarget) }
-  const handleEndClose = () => { setEndAnchorEl(null) }
-  
-  const [open, setOpen] = React.useState(false)
-  const handleClickOpen = () => { setOpen(true) }
-  const handleClose = () => {
-    setStartAnchorEl(null)
-    setOpen(false)
+  const [leftIcon, setLeftIcon] = useState(null)
+  const [rightIcon, setRightIcon] = useState(null)
+  const [sessionDialog, setSessionDialog] = useState(false)
+  const [headerData, setHeaderData] = useState({})
+
+  useEffect(() => {
+    if(firebaseAuth.isLoaded && firebaseAuth.isEmpty){
+      setHeaderData({
+        great: '¡Hola!'
+      })
+    }else if(firebaseAuth.isLoaded && !firebaseAuth.isEmpty){
+      setHeaderData({
+        great: `¡Hola, ${firebaseAuth.displayName.split(' ')[0]}!`,
+        image: firebaseAuth.photoURL
+      })
+    }
+  }, [firebaseAuth])
+
+  const closeSessionDialog = () => {
+    setLeftIcon(null)
+    setSessionDialog(false)
   }
-
+  
   const closeSession = () => {
-    handleClose()
-    props.signOut()
+    closeSessionDialog()
+    signOut()
   }
 
-  const handleSignIn = () => {
-    handleClose()
-    props.signIn()
-  }
-
-  let photoURL = ''
-  let great = '¡Hola!'
-  if(auth.photoURL){
-    photoURL = auth.photoURL
-    great = `¡Hola, ${auth.displayName.split(' ')[0]}!`
+  const openSession = () => {
+    closeSessionDialog()
+    signIn()
   }
 
   return(
     <AppBar position="fixed">
       <Toolbar className="appbar">
+
+        {/* Icono izquierdo / Foto del usuario */}
         <IconButton
           edge="start"
           color="inherit"
           aria-label="start-menu"
-          onClick={handleStartClick}
+          onClick={ event => setLeftIcon(event.currentTarget) }
         >
-          <Avatar alt='Foto de perfil' src={photoURL} className={classes.small}/>
+          <Avatar alt='Foto de perfil' src={headerData.image} className={classes.small}/>
         </IconButton>
 
+        {/* Logo */}
+        <h1 className="logo">
+          <Link to="/" className="logo-link">Vennecia</Link>
+        </h1>
+
+        {/* Icono derecho */}
+        <IconButton 
+          edge="end" 
+          aria-label="end-menu" 
+          onClick={ event => setRightIcon(event.currentTarget) }
+        >
+          <MenuIcon />
+        </IconButton>
+
+        {/* Menu izquierdo */}
         <Menu
           id="start-menu"
-          anchorEl={startAnchorEl}
+          anchorEl={leftIcon}
           keepMounted
-          open={Boolean(startAnchorEl)}
-          onClose={handleStartClose}
+          open={Boolean(leftIcon)}
+          onClose={ () => setLeftIcon(null) }
         >
-          {auth.photoURL ? (
+          {headerData.image ? (
             // Loged in options
             <div>
               <div className="user-info">
-                <Avatar alt='Foto de perfil' src={photoURL} />
-                <h4 className="user-name">{great}</h4>
+                <Avatar alt='Foto de perfil' src={headerData.image} />
+                <h4 className="user-name">{headerData.great}</h4>
               </div>
               <Link to="#" className="menu-link red">
-                <MenuItem onClick={handleClickOpen}>Cerrar sesión</MenuItem>
+                <MenuItem onClick={()=> setSessionDialog(true) }>Cerrar sesión</MenuItem>
               </Link>
             </div>
           ) : (
             // Loged out options
             <div>
               <div className="user-info">
-                <h4 className="user-name">{great}</h4>
+                <h4 className="user-name">{headerData.great}</h4>
               </div>
               <Link to="/" className="menu-link">
-                <MenuItem onClick={handleSignIn}>
+                <MenuItem onClick={openSession}>
                   <img src={google_color} className="g-logo" alt="Icono de Google"></img>
                   Ingresá con Google
                 </MenuItem>
               </Link>
-              {/* <Link to="/" className="menu-link">
-                <MenuItem onClick={handleStartClose}>¿No tenés cuenta de Google?</MenuItem>
-              </Link> */}
             </div>
           )}          
         </Menu>
 
+        {/* Menu derecho */}
+        <Menu
+          id="end-menu"
+          anchorEl={rightIcon}
+          keepMounted
+          open={Boolean(rightIcon)}
+          onClose={()=> setRightIcon(null) }
+        >
+          <Link to="/" className="menu-link">
+            <MenuItem onClick={()=> setRightIcon(null) }>Página principal</MenuItem>
+          </Link>
+          <Link to="/boliches" className="menu-link">
+            <MenuItem onClick={()=> setRightIcon(null) }>¿Tenés un boliche?</MenuItem>
+          </Link>
+        </Menu>
+
+        {/* Diálogo de cerrar sesión */}
         <Dialog
-          open={open}
+          open={sessionDialog}
           TransitionComponent={Transition}
           keepMounted
-          onClose={handleClose}
+          onClose={closeSessionDialog}
           aria-labelledby="alert-dialog-slide-title"
           aria-describedby="alert-dialog-slide-description"
         >
@@ -131,7 +162,7 @@ const Header = (props) => {
             </DialogContentText>
           </DialogContent>
           <DialogActions>
-            <Button onClick={handleClose} color="primary">
+            <Button onClick={closeSessionDialog} color="primary">
               Cancelar
             </Button>
             <Button onClick={closeSession} color="secondary">
@@ -140,30 +171,6 @@ const Header = (props) => {
           </DialogActions>
         </Dialog>
 
-        <h1 className="logo">
-          <Link to="/" className="logo-link">Vennecia</Link>
-        </h1>
-
-        <IconButton edge="end" aria-label="end-menu" onClick={handleEndClick}>
-          <MenuIcon />
-        </IconButton>
-        <Menu
-          id="end-menu"
-          anchorEl={endAnchorEl}
-          keepMounted
-          open={Boolean(endAnchorEl)}
-          onClose={handleEndClose}
-        >
-          <Link to="/" className="menu-link">
-            <MenuItem onClick={handleEndClose}>Página principal</MenuItem>
-          </Link>
-          {/* <Link to="/boliches-disponibles" className="menu-link">
-            <MenuItem onClick={handleEndClose}>Boliches disponibles</MenuItem>
-          </Link> */}
-          <Link to="/boliches" className="menu-link">
-            <MenuItem onClick={handleEndClose}>¿Tenés un boliche?</MenuItem>
-          </Link>
-        </Menu>
       </Toolbar>
     </AppBar>
   )
@@ -171,7 +178,7 @@ const Header = (props) => {
 
 const mapStateToProps = state => {
   return{
-    auth: state.firebase.auth    
+    firebaseAuth: state.firebase.auth
   }
 }
 
