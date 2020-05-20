@@ -60,6 +60,32 @@ export const signIn = () => {
           .add(userData).then(result => {
             dispatch({ type: 'LOGIN_SUCCESS', userData })
           }).catch(err => { console.log(err) })
+
+          var myHeaders = new Headers();
+          myHeaders.append("Content-Type", "application/json");
+          myHeaders.append("Authorization", "Bearer bfa680e3ce108b0aaa948e5ebfb47e6327df59fe");
+          var requestOptions = {
+            method: 'POST',
+            headers: myHeaders,
+            body: JSON.stringify({
+              "long_url": result.user.photoURL
+            }),
+            redirect: 'follow'
+          };
+          fetch("https://api-ssl.bitly.com/v4/shorten", requestOptions)
+          .then(response => response.json())
+          .then(res => {
+            const userNameData = {
+              objectID: result.user.uid,
+              isPublic: false,
+              image: res.link,
+              name: result.user.displayName
+            }
+            firestore.collection('usersName')
+            .add(userNameData).catch(err => { console.log(err) })
+          })
+          .catch(error => console.log('error', error));
+
         }
       }).catch(err => { console.log(err) })
     }).catch(err => { console.log(err) })
