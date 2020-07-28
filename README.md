@@ -10,10 +10,10 @@ The web app is developed in **React JS**, using **Firebase** as database (includ
 
 # Screenshots
 
-![Screenshot 1](https://github.com/agustinwalter/vennecia/blob/master/screenshot-1.png?raw=true)
+![Screenshot 1](https://github.com/agustinwalter/vennecia/blob/master/screenshots/screenshot-1.png?raw=true)
 
-![Screenshot 2](https://github.com/agustinwalter/vennecia/blob/master/screenshot-2.png?raw=true)
+![Screenshot 2](https://github.com/agustinwalter/vennecia/blob/master/screenshots/screenshot-2.png?raw=true)
 
-![Screenshot 3](https://github.com/agustinwalter/vennecia/blob/master/screenshot-3.png?raw=true)
+![Screenshot 3](https://github.com/agustinwalter/vennecia/blob/master/screenshots/screenshot-3.png?raw=true)
 
-![Screenshot 4](https://github.com/agustinwalter/vennecia/blob/master/screenshot-4.png?raw=true)
+![Screenshot 4](https://github.com/agustinwalter/vennecia/blob/master/screenshots/screenshot-4.png?raw=true)
