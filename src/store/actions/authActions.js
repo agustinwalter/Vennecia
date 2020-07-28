@@ -227,7 +227,7 @@ export const generatePeopleList = () => {
     }]
     
     const friendsDocIds = state.vennecia.user.friends
-    
+    console.log(state.vennecia.user)
     if(friendsDocIds){
       const firestore = getFirestore()
       friendsDocIds.forEach(friendDocId => {

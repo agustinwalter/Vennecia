@@ -29,6 +29,7 @@ import TextField from '@material-ui/core/TextField';
 import InputAdornment from '@material-ui/core/InputAdornment';
 import algoliasearch from 'algoliasearch/lite';
 import algolia from '../img/algolia.png';
+import { algoliaConfig } from '../config.json'
 
 const Transition = React.forwardRef(function Transition(props, ref) {
   return <Slide direction="up" ref={ref} {...props} />;
@@ -51,7 +52,7 @@ const useStyles = makeStyles((theme) => ({
   }
 }));
 
-const client = algoliasearch('I1V3GOAM46', '9120ad3e234608f6f66eb2bae0cd9293');
+const client = algoliasearch(algoliaConfig.appId, algoliaConfig.apiKey);
 const usersName = client.initIndex('users');
 
 const Friends = ({
