@@ -1,1 +1,19 @@
-Vennecia es un sistema de reconocimiento facial que escanea tu rostro en la entrada del boliche para que puedas ingresar sin tener que mostrarle tu DNI al seguridad.
+# Vennecia
+
+**Vennecia** is a web app to buy tickets for discos. 
+
+We use **facial recognition** to identify our users upon entering the establishment, greatly reducing waiting times.
+
+The project still in development. Although it has been paused, temporarily, due to COVID-19.
+
+The web app is developed in **React JS**, using **Firebase** as database (including auth, storage and hosting services).
+
+# Screenshots
+
+![Screenshot 1](https://github.com/agustinwalter/vennecia/blob/master/screenshot-1.png?raw=true)
+
+![Screenshot 2](https://github.com/agustinwalter/vennecia/blob/master/screenshot-2.png?raw=true)
+
+![Screenshot 3](https://github.com/agustinwalter/vennecia/blob/master/screenshot-3.png?raw=true)
+
+![Screenshot 4](https://github.com/agustinwalter/vennecia/blob/master/screenshot-4.png?raw=true)

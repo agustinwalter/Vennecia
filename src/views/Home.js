@@ -1,49 +1,54 @@
-import React from 'react'
+import React,  { useEffect, useState } from 'react'
 import { connect } from 'react-redux'
 import '../index.scss'
+import './styles/home.scss'
 import Header from '../components/Header'
 import LandingPage from '../views/LandingPage'
+import ValidationProcess from '../views/ValidationProcess'
+import BuyTickets from '../views/BuyTickets'
+// import HasTickets from '../views/HasTickets'
+// import TicketsAssigneds from '../views/TicketsAssigneds'
+import PendingValidation from './PendingValidation'
 
-// const UserNotLogged = () => {
-//   return <h2>UserNotLogged</h2>
-// }
+const Home = ({ venneciaUser }) => {
+  const [render, setRender] = useState({})
+  
+  useEffect(() => {
+    if(venneciaUser !== undefined){
+      // console.log('Obteniendo estado del usuario, estado actual:')
+      // console.log(venneciaUser)
+      setRender({
+        status: venneciaUser.status,
+        subStatus: venneciaUser.subStatus,
+      })
+    }
+  }, [venneciaUser])
 
-// const UserNotValidated = () => {
-//   return <h2>UserNotValidated</h2>
-// }
-
-// const UserValidated = () => {
-//   return <h2>UserValidated</h2>
-// }
-
-const Home = ({status}) => {
   return(
     <React.Fragment>
       <Header />
 
-      <LandingPage />
-
-      {/* <div className="pd-top">
-        {(() => {
-          switch (status) {
-            case 'USER_NOT_LOGGED':
-              return(<UserNotLogged/>)
-            case 'USER_NOT_VALIDATED':
-              return(<UserNotValidated/>)
-            case 'USER_VALIDATED':
-              return(<UserValidated/>)
-            default:
-              return(null)
-            }
-        })()}
-      </div> */}
+      {(() => {
+        switch (render.status) {
+          case 'USER_NOT_VALIDATED':
+            return(<ValidationProcess/>)
+          case 'USER_VALIDATED':
+            if(render.subStatus === 'PENDING_VALIDATION') return(<PendingValidation/>)
+            return(<BuyTickets/>)
+          // case 'HAS_TICKETS':
+          //   return(<HasTickets/>)
+          // case 'TICKETS_ASSIGNEDS':
+          //   return(<TicketsAssigneds/>)
+          default: return(<LandingPage />)
+        }
+      })()}
     </React.Fragment>
   )
 }
 
 const mapStateToProps = state => {
   return{
-    status: state.auth.status
+    venneciaUser: state.vennecia.user
   }
 }
 

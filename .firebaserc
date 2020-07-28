@@ -1,5 +1,17 @@
 {
   "projects": {
     "default": "vennecia-3414c"
+  },
+  "targets": {
+    "vennecia-3414c": {
+      "hosting": {
+        "vennecia": [
+          "vennecia-3414c"
+        ],
+        "vennecia-dev": [
+          "vennecia-dev"
+        ]
+      }
+    }
   }
 }

@@ -1,0 +1,16 @@
+@import '../../variables.scss';
+
+.div-tickets{
+  padding: 56px 20px 20px 20px;
+  width: 100vw;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: $text-primary;
+  position: relative;
+  display: flex;
+  flex-direction: column;
+}
+.logo-bl{
+  height: 10vh;
+  margin-top: 20px;
+}

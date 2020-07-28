@@ -1,12 +1,14 @@
-import React, { useState } from 'react'
+import React, { useEffect } from 'react'
 import { BrowserRouter as Router, Route, Switch } from "react-router-dom"
 import Home from './views/Home'
-import Boliches from './views/Boliches'
-import AvailableBoliches from './views/AvailableBoliches'
-import NotFound from './views/NotFound'
+// import Boliches from './views/Boliches'
+// import BuyCompleted from './views/BuyCompleted'
+// import Admin from './views/Admin'
+// import AvailableBoliches from './views/AvailableBoliches'
+// import NotFound from './views/NotFound'
 import CircularProgress from '@material-ui/core/CircularProgress'
 import { connect } from 'react-redux'
-import { getUserData } from './store/actions/authActions'
+import { loadUserData, appReady } from './store/actions/authActions'
 import { createMuiTheme, ThemeProvider } from '@material-ui/core/styles';
 
 const styles = {
@@ -49,24 +51,33 @@ const Loader = () => {
   ) 
 }
 
-const App = ({ auth, getUserData, userDataLoaded, gettingData }) => {
-  const [loading, setLoading] = useState(true);
+const App = ({ loadingApp, firebaseAuth, loadUserData, appReady }) => {
 
-  if(auth.uid && loading) getUserData()
-  if((userDataLoaded || (auth.isLoaded && auth.isEmpty)) && loading && !gettingData) setLoading(false)
-  if(gettingData && !loading) setLoading(true)
+  useEffect(() => {
+    if(firebaseAuth.isLoaded && firebaseAuth.isEmpty){
+      appReady()
+      console.log('El usuario no está loggeado.')
+    } else if(firebaseAuth.isLoaded && !firebaseAuth.isEmpty){
+      loadUserData()
+      // console.log('El usuario está loggeado.')
+    } 
+  }, [appReady, firebaseAuth, loadUserData])
 
   return (
     <ThemeProvider theme={theme}>
       <Router>
 
-        { loading && <Loader /> }
+        { loadingApp && <Loader /> }
 
         <Switch>
           <Route exact path="/" component={Home} />
-          <Route path="/boliches-disponibles" component={AvailableBoliches} />
+          {/* <Route path="/boliches-disponibles" component={AvailableBoliches} />
           <Route path="/boliches" component={Boliches} />
-          <Route component={NotFound} />
+          <Route path="/compra-completada" component={BuyCompleted} />
+          <Route path="/admin" >
+            <Admin stillLoading={loading} />
+          </Route>
+          <Route component={NotFound} /> */}
         </Switch>
 
       </Router>
@@ -76,15 +87,15 @@ const App = ({ auth, getUserData, userDataLoaded, gettingData }) => {
 
 const mapStateToProps = state => {
   return{
-    auth: state.firebase.auth,
-    userDataLoaded: state.auth.userDataLoaded,
-    gettingData: state.auth.gettingData
+    loadingApp: state.vennecia.general.loadingApp,
+    firebaseAuth: state.firebase.auth
   }
 }
 
 const mapDispatchToProps = dispatch => {
   return{
-    getUserData: () => dispatch(getUserData())
+    loadUserData: () => dispatch(loadUserData()),
+    appReady: () => dispatch(appReady())
   }
 }
 

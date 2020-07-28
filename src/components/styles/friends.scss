@@ -1,0 +1,28 @@
+@import '../../variables.scss';
+
+.p-first{
+  text-align: center;
+  // margin: 10px 0;
+  margin-bottom: 10px;
+  margin-top: 0;
+}
+.info-warning{
+  margin: 10px 0 10px 0;
+  border: 1px solid $warning-main;
+  svg{
+    color: $warning-main;
+  }
+  p{
+    color: $warning-light;
+  }
+}
+.p-message{
+  font-size: 13px;
+  line-height: 1.5;
+  margin: 0 20px;
+}
+.av-tickets{
+  margin: 3px 0 10px 0;
+  font-size: 13px;
+  text-align: left;
+}

@@ -11,18 +11,9 @@ import { createFirestoreInstance, getFirestore, reduxFirestore } from 'redux-fir
 import { ReactReduxFirebaseProvider, getFirebase } from 'react-redux-firebase'
 import * as firebase from 'firebase/app'
 import 'firebase/firestore'
+import 'firebase/storage'
 import 'firebase/auth'
-
-const firebaseConfig = {
-  apiKey: "AIzaSyAalF_hxudmFYSesA-7sKl1fiXO2aVzCl8",
-  authDomain: "vennecia-3414c.firebaseapp.com",
-  databaseURL: "https://vennecia-3414c.firebaseio.com",
-  projectId: "vennecia-3414c",
-  storageBucket: "vennecia-3414c.appspot.com",
-  messagingSenderId: "228819535006",
-  appId: "1:228819535006:web:b2f857ea3878986005e78f",
-  measurementId: "G-3HJVM9K07N"
-}
+import { firebaseConfig } from './config.json' 
 
 firebase.initializeApp(firebaseConfig)
 firebase.firestore()
